@@ -1,8 +1,7 @@
-
 import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Moon, Sun, Star, Users, MapPin, Calendar, Piano, Mirror, Utensils, Volume2, Camera, ChevronLeft, ChevronRight } from "lucide-react";
+import { Moon, Sun, Star, Users, MapPin, Calendar, Piano, Square, Utensils, Volume2, Camera, ChevronLeft, ChevronRight } from "lucide-react";
 
 const Index = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -155,7 +154,7 @@ const Index = () => {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
             <div className="text-center bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300">
-              <Mirror className="w-12 h-12 text-orange-600 dark:text-orange-400 mx-auto mb-4" />
+              <Square className="w-12 h-12 text-orange-600 dark:text-orange-400 mx-auto mb-4" />
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">전면 거울</h3>
               <p className="text-gray-600 dark:text-gray-300 text-sm">
                 넓은 전면 거울로 공간이 더욱 넓어 보여요
