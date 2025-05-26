@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Moon, Sun, Star, Users, MapPin, Calendar, Piano, Square, Utensils, Volume2, Camera, ChevronLeft, ChevronRight } from "lucide-react";
 
 const Index = () => {
@@ -10,6 +12,51 @@ const Index = () => {
     setIsDarkMode(!isDarkMode);
     document.documentElement.classList.toggle('dark');
   };
+
+  const galleryImages = [
+    {
+      id: 1,
+      src: "https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=800&q=80",
+      alt: "희나스페이스 메인 룸",
+      title: "넓은 메인 룸"
+    },
+    {
+      id: 2,
+      src: "https://images.unsplash.com/photo-1582562124811-c09040d0a901?w=800&q=80",
+      alt: "편안한 휴식 공간",
+      title: "편안한 휴식 공간"
+    },
+    {
+      id: 3,
+      src: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=800&q=80",
+      alt: "아일랜드 식탁",
+      title: "아일랜드 식탁"
+    }
+  ];
+
+  const reviews = [
+    {
+      id: 1,
+      name: "김○○님",
+      rating: 5,
+      text: "아이 생일파티로 이용했는데 정말 만족해요! 조용하고 깨끗해서 사진도 예쁘게 나오고, 아이들이 너무 좋아했어요.",
+      image: "https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=400&q=80"
+    },
+    {
+      id: 2,
+      name: "박○○님",
+      rating: 5,
+      text: "키즈카페 대신 찾던 곳이에요. 조용해서 어른들끼리 대화도 잘 되고, 시설도 깔끔해서 재방문 의사 100%!",
+      image: "https://images.unsplash.com/photo-1582562124811-c09040d0a901?w=400&q=80"
+    },
+    {
+      id: 3,
+      name: "이○○님",
+      rating: 5,
+      text: "피아노가 있어서 아이가 정말 좋아해요. 거울도 있어서 공간이 넓어 보이고, 무엇보다 프라이빗해서 편해요.",
+      image: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=400&q=80"
+    }
+  ];
 
   return (
     <div className={`min-h-screen transition-colors duration-300 ${isDarkMode ? 'dark' : ''}`}>
@@ -188,8 +235,61 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Reviews Section */}
+      {/* Gallery Section */}
       <section className="py-16 px-4 bg-white dark:bg-gray-800">
+        <div className="container mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+              현장 사진 갤러리
+            </h2>
+            <p className="text-lg text-gray-600 dark:text-gray-300">
+              희나스페이스의 실제 모습을 확인해보세요
+            </p>
+          </div>
+
+          <div className="max-w-6xl mx-auto">
+            <Carousel className="w-full">
+              <CarouselContent className="-ml-2 md:-ml-4">
+                {galleryImages.map((image) => (
+                  <CarouselItem key={image.id} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <div className="cursor-pointer group">
+                          <div className="relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform group-hover:scale-105">
+                            <img
+                              src={image.src}
+                              alt={image.alt}
+                              className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110"
+                            />
+                            <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
+                              <Camera className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                            </div>
+                          </div>
+                          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mt-3 text-center">
+                            {image.title}
+                          </h3>
+                        </div>
+                      </DialogTrigger>
+                      <DialogContent className="max-w-4xl">
+                        <img
+                          src={image.src}
+                          alt={image.alt}
+                          className="w-full h-auto rounded-lg"
+                        />
+                      </DialogContent>
+                    </Dialog>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious />
+              <CarouselNext />
+            </Carousel>
+          </div>
+        </div>
+      </section>
+
+      {/* Reviews Section */}
+      <section className="py-16 px-4 bg-gray-50 dark:bg-gray-900">
         <div className="container mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
@@ -201,53 +301,32 @@ const Index = () => {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            <Card className="bg-gray-50 dark:bg-gray-700 border-0 shadow-lg">
-              <CardHeader>
-                <div className="flex items-center gap-1 mb-2">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                  ))}
+            {reviews.map((review) => (
+              <Card key={review.id} className="bg-white dark:bg-gray-800 border-0 shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
+                <div className="relative">
+                  <img
+                    src={review.image}
+                    alt={`${review.name} 후기 사진`}
+                    className="w-full h-48 object-cover"
+                  />
+                  <div className="absolute top-4 left-4 bg-white dark:bg-gray-800 rounded-full px-3 py-1 shadow-lg">
+                    <div className="flex items-center gap-1">
+                      {[...Array(review.rating)].map((_, i) => (
+                        <Star key={i} className="w-3 h-3 fill-yellow-400 text-yellow-400" />
+                      ))}
+                    </div>
+                  </div>
                 </div>
-                <CardTitle className="text-lg text-gray-900 dark:text-white">김○○님</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-gray-600 dark:text-gray-300">
-                  "아이 생일파티로 이용했는데 정말 만족해요! 조용하고 깨끗해서 사진도 예쁘게 나오고, 아이들이 너무 좋아했어요."
-                </CardDescription>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-gray-50 dark:bg-gray-700 border-0 shadow-lg">
-              <CardHeader>
-                <div className="flex items-center gap-1 mb-2">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                  ))}
-                </div>
-                <CardTitle className="text-lg text-gray-900 dark:text-white">박○○님</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-gray-600 dark:text-gray-300">
-                  "키즈카페 대신 찾던 곳이에요. 조용해서 어른들끼리 대화도 잘 되고, 시설도 깔끔해서 재방문 의사 100%!"
-                </CardDescription>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-gray-50 dark:bg-gray-700 border-0 shadow-lg">
-              <CardHeader>
-                <div className="flex items-center gap-1 mb-2">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                  ))}
-                </div>
-                <CardTitle className="text-lg text-gray-900 dark:text-white">이○○님</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-gray-600 dark:text-gray-300">
-                  "피아노가 있어서 아이가 정말 좋아해요. 거울도 있어서 공간이 넓어 보이고, 무엇보다 프라이빗해서 편해요."
-                </CardDescription>
-              </CardContent>
-            </Card>
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-lg text-gray-900 dark:text-white">{review.name}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <CardDescription className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                    "{review.text}"
+                  </CardDescription>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </div>
       </section>
