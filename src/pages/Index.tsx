@@ -6,6 +6,8 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Moon, Sun, Star, Users, MapPin, Calendar, Piano, Square, Utensils, Volume2, Camera, ChevronLeft, ChevronRight } from "lucide-react";
 
 const Index = () => {
+  console.log("Index component loaded successfully");
+  
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   const toggleDarkMode = () => {
